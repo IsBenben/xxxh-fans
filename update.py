@@ -3,6 +3,7 @@ import json
 import requests
 from datetime import datetime
 import sys
+from zoneinfo import ZoneInfo  # 在文件顶部导入
 
 # ========== 配置 ==========
 UID = os.environ.get('BILIBILI_UID', '3546867929451208')  # 请替换为真实UID，或通过 Secrets 传入
@@ -68,7 +69,7 @@ def main():
         sys.exit(1)
 
     history = load_history()
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    now = datetime.now(ZoneInfo('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M")
     history.append({"date": now, "count": current_fans})
 
     if len(history) > MAX_HISTORY:
