@@ -17,8 +17,11 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Install dependencies
+      - name: Install dependency requests
         run: pip install requests
+      
+      - name: Install dependency tzdata
+        run: pip install tzdata
 
       - name: Run update script
         run: python update.py
