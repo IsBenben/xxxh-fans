@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小谢谢黄粉丝 - Bilibili 实时大屏</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #f0f2f5 0%, #e6e9f0 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        /* 卡片容器：控制最大宽度，垂直间距 */
+        .cards-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        /* 通用卡片样式 */
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 40px;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+            padding: 2rem 2.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* 大字粉丝数卡片内部布局 */
+        .fans-section {
+            text-align: center;
+            position: relative;
+        }
+
+        .change-toast {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff5e7c;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .change-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-20px) scale(0.5);
+        }
+
+        .big-fans {
+            font-size: 6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e2b3c, #0b1a2a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-container {
+            margin: 1.5rem 0 0.5rem;
+            position: relative;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            overflow: visible;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b8cff, #9f7aff);
+            border-radius: 30px;
+            transition: width 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-marker {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 32px;
+            background: #222;
+            border-radius: 6px;
+            z-index: 2;
+            box-shadow: 0 2px 8px black;
+        }
+
+        .marker-5277 {
+            left: 47.97%; /* 5277/11000 */
+        }
+
+        .marker-10000 {
+            left: 90.91%; /* 10000/11000 */
+        }
+
+        .goal-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            color: #2d3a4f;
+            font-weight: 500;
+            margin: 0.5rem 0 0;
+        }
+
+        /* 文章卡片（独立） */
+        .article-card {
+            /* 直接使用 .card 样式，无需额外 */
+        }
+
+        .article-card article {
+            /* 移除内联 margin-top，由卡片内边距控制 */
+            color: #2f405c;
+        }
+
+        .article-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e2b3c;
+            margin-bottom: 1rem;
+            border-left: 6px solid #3b8cff;
+            padding-left: 1rem;
+        }
+
+        .article-card p {
+            margin: 0.75rem 0;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #2f405c;
+        }
+
+        .article-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 历史数据卡片 */
+        .history-cards .history-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e2b3c;
+            margin-bottom: 1.8rem;
+            border-left: 8px solid #3b8cff;
+            padding-left: 1rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .history-cards .history-card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.2rem 0.8rem;
+            box-shadow: 0 10px 20px -8px rgba(0, 20, 40, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .history-cards .history-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -10px rgba(0, 40, 80, 0.3);
+        }
+
+        .card-date {
+            font-size: 0.85rem;
+            color: #5e6f8d;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .card-count {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0a1a2b;
+            line-height: 1.2;
+        }
+
+        .card-change {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 0.3rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            background: #f0f4fe;
+        }
+
+        .card-change.positive {
+            color: #2b8c5e;
+        }
+
+        .card-change.negative {
+            color: #d03164;
+        }
+
+        /* 全局页脚 */
+        .global-footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #8a9bb5;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* 关注按钮卡片 */
+.link-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;  /* 调整内边距，让按钮更突出 */
+}
+.follow-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #fb7299, #ff8fab);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: 60px;
+    text-decoration: none;
+    box-shadow: 0 10px 20px -5px rgba(251, 114, 153, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(4px);
+    letter-spacing: 1px;
+}
+.follow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px -5px rgba(251, 114, 153, 0.6);
+    background: linear-gradient(135deg, #ff859f, #ff9fbb);
+}
+    </style>
+</head>
+<body>
+    <div class="cards-container">
+<!-- 卡片4：关注引导 -->
+<section class="card link-card">
+    <a href="https://space.bilibili.com/3546867929451208" target="_blank" rel="noopener noreferrer" class="follow-button">
+        立刻去B站关注小谢谢黄 🚀
+    </a>
+</section>
+        
+        <!-- 卡片1：大字粉丝数 -->
+        <section class="card fans-card">
+            <div class="fans-section">
+                <div id="changeToast" class="change-toast"></div>
+                <div class="big-fans" id="fansDisplay">{{fans_count}}</div>
+                <div class="progress-container">
+                    <div class="progress-fill" id="progressFill" style="width: {{progress_width}};"></div>
+                    <div class="progress-marker marker-5277" title="5277粉丝"></div>
+                    <div class="progress-marker marker-5277" title="5277粉丝露脸"></div>
+                    <div class="progress-marker marker-10000" title="10000粉丝女装"></div>
+                </div>
+                <div class="goal-text">
+                    <span>0</span>
+                    <span>露脸目标: 5277</span>
+                    <span>女装目标: 10000</span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 卡片2：里程碑文章 -->
+        <section class="card article-card">
+            <article>
+                <h2>B站UP主小谢谢黄设立粉丝里程碑，承诺露脸与女装展示</h2>
+                <p>经多方核实，B站UP主"小谢谢黄"近日正式设立粉丝里程碑计划：当粉丝数达到5277时，将首次录制高清视频露脸；待粉丝突破10000大关时，将完成女装承诺并发布展示视频。这一消息已在小谢谢黄粉丝及得到本人确认，符合其一贯与粉丝互动的风格。</p>
+                <p>数字5277被粉丝解读为"我爱崔崔"，可能暗示着对小谢谢黄个人有特殊意义的纪念日或人物关系，这一精心设置的数字为粉丝互动增添了情感连接点。据了解，小谢谢黄当前粉丝数处于千粉级别，正处于快速上升阶段，这一承诺已成为粉丝关注的焦点。</p>
+                <p>露脸与女装内容将以高清视频形式呈现，确保小谢谢黄现实真实面貌得到充分展示，这标志着其内容创作的重要转型。从虚拟形象到真实面貌的突破，不仅满足了粉丝对UP主真实性的好奇心，也为内容创作开辟了新的可能性。</p>
+                <p>这一策略体现了UP主与粉丝间的深度互动机制，通过设置明确目标激发粉丝参与热情，加速账号增长。粉丝社群已自发组织应援活动，通过内容分享和话题讨论推动粉丝数增长，期待早日见证这一历史性时刻。</p>
+                <p>对于小谢谢黄而言，这既是对粉丝承诺的兑现，也是个人品牌形象的重要提升，为其内容创作生态的拓展奠定基础。关注小谢谢黄，共同见证这一特殊时刻的到来！</p>
+            </article>
+        </section>
+
+        <!-- 卡片3：历史数据 -->
+        <section class="card history-cards">
+            <div class="history-title">📊 历史快照 (每30分钟)</div>
+            <div class="cards-grid" id="historyCards">
+                {{history_cards}}
+            </div>
+        </section>
+    </div>
+
+    <footer class="global-footer">
+        数据每30分钟更新 · 实时粉丝数每5秒刷新
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
