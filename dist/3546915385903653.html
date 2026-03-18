@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{bilibili_name}}粉丝 - Bilibili 实时大屏</title>
+    <title>死灵马粉丝 - Bilibili 实时大屏</title>
     <style>
       * {
           box-sizing: border-box;
@@ -122,18 +122,18 @@
       }
 
       .marker-1 {
-          display: {{marker_1_display}};
-          left: calc({{marker_1_progress}} / {{total_progress}} * 100%);
+          display: none;
+          left: calc(0 / 100 * 100%);
       }
 
       .marker-2 {
-          display: {{marker_2_display}};
-          left: calc({{marker_2_progress}} / {{total_progress}} * 100%);
+          display: none;
+          left: calc(0 / 100 * 100%);
       }
 
       .marker-3 {
-          display: {{marker_3_display}};
-          left: calc({{marker_3_progress}} / {{total_progress}} * 100%);
+          display: none;
+          left: calc(0 / 100 * 100%);
       }
 
       .goal-text {
@@ -285,12 +285,12 @@
       <!-- 卡片4：关注引导 -->
       <section class="card link-card">
         <a
-          href="https://space.bilibili.com/{{bilibili_uid}}"
+          href="https://space.bilibili.com/3546915385903653"
           target="_blank"
           rel="noopener noreferrer"
           class="follow-button"
         >
-          立刻去B站关注{{bilibili_name}} 🚀
+          立刻去B站关注死灵马 🚀
         </a>
       </section>
 
@@ -298,26 +298,26 @@
       <section class="card fans-card">
         <div class="fans-section">
           <div id="changeToast" class="change-toast"></div>
-          <div class="big-fans" id="fansDisplay">{{fans_count}}</div>
+          <div class="big-fans" id="fansDisplay">20</div>
           <div class="progress-container">
             <div
               class="progress-fill"
               id="progressFill"
-              style="width: {{progress_width}};"
+              style="width: 0.18%;"
             ></div>
-            <div class="progress-marker marker-1" title="达到{{marker_1_progress}}粉丝后{{marker_1_text}}">
-              <span>目标1：{{marker_1_progress}}（{{marker_1_text}}）</span>
+            <div class="progress-marker marker-1" title="达到0粉丝后—">
+              <span>目标1：0（—）</span>
             </div>
-            <div class="progress-marker marker-2" title="达到{{marker_2_progress}}粉丝后{{marker_2_text}}">
-              <span>目标2：{{marker_2_progress}}（{{marker_2_text}}）</span>
+            <div class="progress-marker marker-2" title="达到0粉丝后—">
+              <span>目标2：0（—）</span>
             </div>
-            <div class="progress-marker marker-3" title="达到{{marker_3_progress}}粉丝后{{marker_3_text}}">
-              <span>目标3：{{marker_3_progress}}（{{marker_3_text}}）</span>
+            <div class="progress-marker marker-3" title="达到0粉丝后—">
+              <span>目标3：0（—）</span>
             </div>
           </div>
           <div class="goal-text">
             <span>0</span>
-            <span>{{total_progress}}</span>
+            <span>100</span>
           </div>
         </div>
       </section>
@@ -325,15 +325,35 @@
       <!-- 卡片2：里程碑文章 -->
       <section class="card article-card">
         <article>
-          <h2>{{bilibili_name}} Up介绍</h2>
-          {{up_description}}
+          <h2>死灵马 Up介绍</h2>
+          
+<h3>简介</h3>
+<p>这是一位刚刚起步、充满生活气息的萌新UP主，个性签名“快给UP三连awa”透着学生党特有的可爱与真诚。从2025年6月底开始更新，他的视频像一本随手记录的生活手账——军工模型制作、美食探店、自然风光、日常趣事无所不包。虽然目前粉丝不多，但每一期都展现出对生活的热爱：既能钻研火炮冲击模型的炮管制作，也会分享一碗咕噜咕噜的咖喱饭，真实而接地气。账号虽小，却藏着一位斜杠少年的多彩日常。</p>
+
+<h3>主要更新内容</h3>
+<ul>
+    <li><strong>小马哥军工系列</strong>：最硬核的连载内容，专注军事模型制作。《小马哥军工-开篇》宣告入坑，随后推出《小马哥军工-炮管制作》《火炮冲击M126制作》，从零件加工到组装全程记录，虽然播放量不高，但制作态度认真，细节满满。</li>
+    <li><strong>美食记录</strong>：不定期更新美食日常，主打真实分享。《没想到吧，我还是半个美食博主！酸辣螺蛳粉，直冲天灵盖！》《随便一夹，就是美食》《夏日冰瓜乐》等短片，几分钟甚至几十秒，记录学生党的一餐一饭，充满生活烟火气。</li>
+    <li><strong>自然风光与日常随拍</strong>：用手机记录旅途和生活中的美好瞬间。《没看过庐山瀑布？那就来长白瀑布看看吧》《如果没有看夕阳，那就看看云吧》展现对风景的细腻观察；《关于我姑家窗外来了一位“不速之客”......》则捕捉到野生小动物到访的惊喜，真实有趣。</li>
+    <li><strong>趣味生活实验</strong>：偶尔放飞脑洞，比如《三角铅笔 + 削笔刀 =》用20秒展示削铅笔的过程，莫名解压；《虾将军来也！》记录不知名的小生物，充满童真。</li>
+</ul>
+
+<h3>更新历程</h3>
+<p>UP主于2025年6月底以“小马哥军工”系列正式出道，开篇视频宣告入坑模型制作，随后接连更新炮管、火炮冲击等制作过程，展现出对军事模型的兴趣。同年7月开始拓展内容边界，加入美食和风光日常——螺蛳粉、咖喱饭、冰西瓜、长白瀑布、夕阳云彩，逐渐形成“军工+生活”的混搭风格。8月偶然记录下窗外的“不速之客”（疑似野生小动物），意外成为播放量最高的日常视频之一。12月更新虾将军后，2026年3月带来《三角铅笔 + 削笔刀 =》的极短短片，延续着随性而发的更新节奏。从开篇至今，这位UP主始终保持着“想到什么拍什么”的真实感，没有刻意运营，只有一位普通少年用镜头记录下的生活碎片。</p>
+
         </article>
       </section>
 
       <!-- 卡片3：历史数据 -->
       <section class="card history-cards">
         <div class="history-title">📊 历史快照 (定时更新)</div>
-        <div class="cards-grid" id="historyCards">{{history_cards}}</div>
+        <div class="cards-grid" id="historyCards">
+        <div class="history-card">
+          <div class="card-date">2026-03-18 21:00</div>
+          <div class="card-count">20</div>
+          <div class="card-change ">—</div>
+        </div>
+        </div>
       </section>
     </div>
 
@@ -342,8 +362,8 @@
     </footer>
 
     <script>
-      const BILIBILI_UID = '{{bilibili_uid}}';
-      const TOTAL_GOAL = {{total_progress}};
+      const BILIBILI_UID = '3546915385903653';
+      const TOTAL_GOAL = 100;
     </script>
     <script src="index.js"></script>
   </body>

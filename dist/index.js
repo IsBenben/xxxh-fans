@@ -1,7 +1,5 @@
 // 请将 UID 替换为你的 B站 UID
-const BILIBILI_UID = '3546867929451208';
-const API_URL = `https://api.codetabs.com/v1/proxy?quest=https://api.bilibili.com/x/relation/stat?vmid=${BILIBILI_UID}`;
-const TOTAL_GOAL = 11000;
+const API_URL = `https://api.codetabs.com/v1/proxy/?quest=https://api.bilibili.com/x/relation/stat?vmid=${BILIBILI_UID}`;
 
 const fansDisplay = document.getElementById('fansDisplay');
 const progressFill = document.getElementById('progressFill');
@@ -44,6 +42,9 @@ async function fetchFans() {
     } catch (error) {
         console.error('Fetch failed:', error);
     }
+    setTimeout(() => {
+        fetchFans();
+    }, 5000);
 }
 
 // 初始化进度条
@@ -51,6 +52,3 @@ updateProgress(currentFans);
 
 // 立即获取一次最新数据（可选，保证打开页面时与真实值同步）
 fetchFans();
-
-// 每5秒轮询
-setInterval(fetchFans, 5000);
