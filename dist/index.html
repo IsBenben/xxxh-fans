@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>粉丝数实时刷新 - Bilibili 大屏</title>
+    <style>
+      * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+      body {
+          font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+          background: linear-gradient(145deg, #f0f2f5 0%, #e6e9f0 100%);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 2rem 1rem;
+      }
+
+      /* 卡片容器：控制最大宽度，垂直间距 */
+      .cards-container {
+          max-width: 1200px;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 1.8rem;
+      }
+
+      /* 通用卡片样式 */
+      .card {
+          background: rgba(255, 255, 255, 0.7);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-radius: 40px;
+          box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+          padding: 2rem 2.2rem;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      /* 文章卡片（独立） */
+      .article-card {
+          /* 直接使用 .card 样式，无需额外 */
+      }
+
+      .article-card article {
+          /* 移除内联 margin-top，由卡片内边距控制 */
+          color: #2f405c;
+      }
+
+      .article-card h2 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #1e2b3c;
+          margin-bottom: 1rem;
+          border-left: 6px solid #3b8cff;
+          padding-left: 1rem;
+      }
+
+      .article-card p {
+          margin: 0.75rem 0;
+          font-size: 1.05rem;
+          line-height: 1.5;
+          color: #2f405c;
+      }
+
+      .article-card p:last-child {
+          margin-bottom: 0;
+      }
+
+      /* 全局页脚 */
+      .global-footer {
+          margin-top: 2rem;
+          font-size: 0.9rem;
+          color: #8a9bb5;
+          text-align: center;
+          max-width: 1200px;
+          width: 100%;
+      }
+
+             /* 关注按钮卡片 */
+      .link-card {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 1.5rem;  /* 调整内边距，让按钮更突出 */
+      }
+      .follow-button {
+          display: inline-block;
+          background: linear-gradient(135deg, #fb7299, #ff8fab);
+          color: white;
+          font-size: 1.5rem;
+          font-weight: 600;
+          padding: 1rem 2.5rem;
+          border-radius: 60px;
+          text-decoration: none;
+          box-shadow: 0 10px 20px -5px rgba(251, 114, 153, 0.4);
+          transition: transform 0.2s, box-shadow 0.2s;
+          border: 1px solid rgba(255,255,255,0.3);
+          backdrop-filter: blur(4px);
+          letter-spacing: 1px;
+      }
+      .follow-button:hover {
+          transform: scale(1.05);
+          box-shadow: 0 15px 30px -5px rgba(251, 114, 153, 0.6);
+          background: linear-gradient(135deg, #ff859f, #ff9fbb);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cards-container">
+      <section class="card link-card">
+        <a
+          href="./3493138995874499.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="follow-button"
+        >
+          bili_wangac
+        </a>
+        <a
+          href="./3546867929451208.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="follow-button"
+        >
+          小谢谢黄
+        </a>
+        <a
+          href="./3546915385903653.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="follow-button"
+        >
+          死灵马
+        </a>
+      </section>
+
+      <!-- 卡片2：里程碑文章 -->
+      <section class="card article-card">
+        <article>
+          <h2>Bilibili 实时大屏</h2>
+          <ul>
+            <li><strong>实时粉丝数显示</strong> 每5秒自动刷新最新粉丝数，数字变化时伴随优雅的动画提示</li>
+            <li><strong>进度条目标</strong> 设置多个里程碑，进度实时更新</li>
+            <li><strong>历史数据卡片</strong> 每30分钟自动记录一次粉丝数，形成历史卡片，显示时间、粉丝数及变化量</li>
+            <li><strong>独立卡片布局</strong> 三大模块：粉丝主屏、里程碑说明、历史快照，外加B站关注引导卡片</li>
+            <li><strong>全自动运行</strong> GitHub Actions 定时抓取数据，无需手动干预</li>
+            <li><strong>现代UI设计</strong> 毛玻璃效果、渐变色彩、平滑动画，适配深/浅色背景</li>
+          </ul>
+        </article>
+      </section>
+    </div>
+
+    <footer class="global-footer">
+      Bilibili 实时大屏
+    </footer>
+  </body>
+</html>

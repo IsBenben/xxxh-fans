@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{bilibili_name}}粉丝 - Bilibili 实时大屏</title>
+    <title>bili_wangac粉丝 - Bilibili 实时大屏</title>
     <style>
       * {
           box-sizing: border-box;
@@ -122,18 +122,18 @@
       }
 
       .marker-1 {
-          display: {{marker_1_display}};
-          left: calc({{marker_1_progress}} / {{total_progress}} * 100%);
+          display: block;
+          left: calc(500 / 1000 * 100%);
       }
 
       .marker-2 {
-          display: {{marker_2_display}};
-          left: calc({{marker_2_progress}} / {{total_progress}} * 100%);
+          display: none;
+          left: calc(0 / 1000 * 100%);
       }
 
       .marker-3 {
-          display: {{marker_3_display}};
-          left: calc({{marker_3_progress}} / {{total_progress}} * 100%);
+          display: none;
+          left: calc(0 / 1000 * 100%);
       }
 
       .goal-text {
@@ -285,12 +285,12 @@
       <!-- 卡片4：关注引导 -->
       <section class="card link-card">
         <a
-          href="https://space.bilibili.com/{{bilibili_uid}}"
+          href="https://space.bilibili.com/3493138995874499"
           target="_blank"
           rel="noopener noreferrer"
           class="follow-button"
         >
-          立刻去B站关注{{bilibili_name}} 🚀
+          立刻去B站关注bili_wangac 🚀
         </a>
       </section>
 
@@ -298,26 +298,26 @@
       <section class="card fans-card">
         <div class="fans-section">
           <div id="changeToast" class="change-toast"></div>
-          <div class="big-fans" id="fansDisplay">{{fans_count}}</div>
+          <div class="big-fans" id="fansDisplay">315</div>
           <div class="progress-container">
             <div
               class="progress-fill"
               id="progressFill"
-              style="width: {{progress_width}};"
+              style="width: 2.86%;"
             ></div>
-            <div class="progress-marker marker-1" title="达到{{marker_1_progress}}粉丝后{{marker_1_text}}">
-              <span>目标1：{{marker_1_progress}}（{{marker_1_text}}）</span>
+            <div class="progress-marker marker-1" title="达到500粉丝后2026中旬目标">
+              <span>目标1：500（2026中旬目标）</span>
             </div>
-            <div class="progress-marker marker-2" title="达到{{marker_2_progress}}粉丝后{{marker_2_text}}">
-              <span>目标2：{{marker_2_progress}}（{{marker_2_text}}）</span>
+            <div class="progress-marker marker-2" title="达到0粉丝后—">
+              <span>目标2：0（—）</span>
             </div>
-            <div class="progress-marker marker-3" title="达到{{marker_3_progress}}粉丝后{{marker_3_text}}">
-              <span>目标3：{{marker_3_progress}}（{{marker_3_text}}）</span>
+            <div class="progress-marker marker-3" title="达到0粉丝后—">
+              <span>目标3：0（—）</span>
             </div>
           </div>
           <div class="goal-text">
             <span>0</span>
-            <span>{{total_progress}}</span>
+            <span>1000</span>
           </div>
         </div>
       </section>
@@ -325,15 +325,35 @@
       <!-- 卡片2：里程碑文章 -->
       <section class="card article-card">
         <article>
-          <h2>{{bilibili_name}} Up介绍</h2>
-          {{up_description}}
+          <h2>bili_wangac Up介绍</h2>
+          
+<h3>简介</h3>
+<p>这位UP主是一位深藏不露的技术型创作者，从2023年起在B站分享编程与Minecraft的奇妙碰撞。他的视频既有硬核的Python、Scratch教程，也有天马行空的Minecraft创意实验——比如用谷歌翻译“鞭尸”游戏、统计三界方块数量，甚至自己动手给Scratch设计了一门编程语言。个性签名指向GitHub主页，透露出他乐于开源、喜欢折腾的极客精神。虽然粉丝数不算多，但每个作品都透着“用代码玩出花”的巧思，堪称学生党中的技术流宝藏UP主。</p>
+
+<h3>主要更新内容</h3>
+<ul>
+    <li><strong>Minecraft创意工坊</strong>：将编程脑洞融入游戏，代表作《Minecraft，但是谷歌翻译十遍》播放量高达11.4万，用机翻循环制造生草效果；《Minecraft方块主世界下界末地自然生成数量排行榜》则以数据可视化方式科普方块密度，收获1.6万观看。还有染色刷子、摩尔纹效应等冷知识挖掘，趣味与知识并存。</li>
+    <li><strong>编程语言与工具开发</strong>：最硬核的系列当属“给Scratch设计编程语言”——《【Scratch&amp;Python】你给Scratch做了一个编程语言？？》展现了他用Python自制Scratch方言的能力，后续还推出更新版本，甚至研究了Scratch字符串处理的大坑，技术深度可见一斑。</li>
+    <li><strong>编程教程系列</strong>：早期专注于Python教学，覆盖五子棋游戏、接水果小游戏、排座位软件、类和对象等多个系列，每集几分钟，短小精悍，适合新手入门。后期转向Scratch，演示等轴渲染、生命游戏等进阶玩法，持续输出干货。</li>
+    <li><strong>趣味技术实验</strong>：从《TurboWarp偶遇11000个重复执行》的性能测试，到《如果我们在运行程序时，删除Python，会发生什么呢？》的哲学实验，再到HTML烟花、JavaScript字幕等节日彩蛋，总能用代码制造惊喜。</li>
+</ul>
+
+<h3>更新历程</h3>
+<p>UP主于2023年6月以Python教程系列起步，从排座位软件到五子棋游戏，保持着周更节奏，内容扎实但播放量平平。2024年下半年开始转型，将编程与Minecraft、Scratch等更受年轻人欢迎的元素结合，逐渐找到创作方向。2025年迎来爆发：《Minecraft，但是谷歌翻译十遍》凭借无厘头创意突破10万播放，成为代表作；随后推出的Minecraft方块统计、Scratch编程语言等项目持续吸引技术爱好者。2026年初，他依然保持着高质量更新，Minecraft可视化系列进一步巩固风格。从早期默默无闻到如今拥有固定粉丝群，这位UP主用代码证明了“技术宅”也能玩出上万播放</p>
+
         </article>
       </section>
 
       <!-- 卡片3：历史数据 -->
       <section class="card history-cards">
         <div class="history-title">📊 历史快照 (定时更新)</div>
-        <div class="cards-grid" id="historyCards">{{history_cards}}</div>
+        <div class="cards-grid" id="historyCards">
+        <div class="history-card">
+          <div class="card-date">2026-03-18 21:00</div>
+          <div class="card-count">315</div>
+          <div class="card-change ">—</div>
+        </div>
+        </div>
       </section>
     </div>
 
@@ -342,8 +362,8 @@
     </footer>
 
     <script>
-      const BILIBILI_UID = '{{bilibili_uid}}';
-      const TOTAL_GOAL = {{total_progress}};
+      const BILIBILI_UID = '3493138995874499';
+      const TOTAL_GOAL = 1000;
     </script>
     <script src="index.js"></script>
   </body>
