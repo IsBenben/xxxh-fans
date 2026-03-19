@@ -59,7 +59,7 @@ def generate_history_cards(history):
     return ''.join(cards)
 
 def main():
-    os.makedirs('dist', exist_ok=True)
+    os.makedirs('docs', exist_ok=True)
     
     history = load_history()
     
@@ -120,7 +120,7 @@ def main():
                 html_content = html_content.replace(f'{{{{marker_{i+1}_progress}}}}', '0')
                 html_content = html_content.replace(f'{{{{marker_{i+1}_text}}}}', '—')
 
-            with open(f'dist/{uid}.html', 'w', encoding='utf-8') as f:
+            with open(f'docs/{uid}.html', 'w', encoding='utf-8') as f:
                 f.write(html_content)
                 print(f"Stored {uid}.")
             
@@ -137,7 +137,7 @@ def main():
             
     save_history(history)
     
-    with open(f'dist/index.html', 'w', encoding='utf-8') as f:
+    with open(f'docs/index.html', 'w', encoding='utf-8') as f:
         index_html_content = index_template.replace('{{ups-sponsor}}', ''.join(sponsor_links))
         index_html_content = index_html_content.replace('{{ups-more}}', ''.join(more_ups_links))
         f.write(index_html_content)
