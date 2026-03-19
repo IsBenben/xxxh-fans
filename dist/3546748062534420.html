@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>苹果园我爱你|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
+    <style>
+      :root {
+        --marker_1_display: none;
+        --marker_1_progress: 0;
+        --marker_2_display: none;
+        --marker_2_progress: 0;
+        --marker_3_display: none;
+        --marker_3_progress: 0;
+        --total_progress: 50;
+      }
+    </style>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="cards-container">
+      <!-- 卡片4：关注引导 -->
+      <section class="card link-card">
+        <a
+          href="https://space.bilibili.com/3546748062534420"
+          target="_blank"
+          class="follow-button"
+        >
+          立刻去B站关注苹果园我爱你 🚀
+        </a>
+        <a
+          href="./"
+          target="_blank"
+          class="follow-button"
+        >
+          返回首页 ◀
+        </a>
+      </section>
+
+      <!-- 卡片1：大字粉丝数 -->
+      <section class="card fans-card">
+        <div class="fans-section">
+          <div id="changeToast" class="change-toast"></div>
+          <div class="big-fans" id="fansDisplay">11</div>
+          <div class="progress-container">
+            <div
+              class="progress-fill"
+              id="progressFill"
+              style="width: 0.10%;"
+            ></div>
+            <div
+              class="progress-marker marker-1"
+              title="达到0粉丝后—"
+            >
+              <span>目标1：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-2"
+              title="达到0粉丝后—"
+            >
+              <span>目标2：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-3"
+              title="达到0粉丝后—"
+            >
+              <span>目标3：0（—）</span>
+            </div>
+          </div>
+          <div class="goal-text">
+            <span>0</span>
+            <span>50</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 卡片2：里程碑文章 -->
+      <section class="card article-card">
+        <article>
+          <h2>苹果园我爱你 Up介绍</h2>
+          
+<h3>1. 简介</h3>
+<p>这位UP主自称“初一小学生”，从2025年7月开始在B站发布视频，是一位刚刚起步的新人创作者。他的内容风格随性自由，既有对北京地铁的系列锐评，也有随手记录的日常生活片段。虽然粉丝数不多、视频制作尚显稚嫩，但他保持着对生活的观察和表达欲，用简短的镜头记录下自己眼中的世界，展现出学生党最真实的创作状态。</p>
+
+<h3>2. 主要更新内容</h3>
+<ul>
+    <li><strong>北京地铁锐评系列</strong>：目前更新至第四期，每期一分钟左右，以第一人称视角点评北京地铁的各类现象——可能是站台秩序、车厢拥挤度，也可能是某个细节引发的吐槽。语言直白随性，带有学生特有的观察角度，目前已形成个人标志性系列。</li>
+    <li><strong>生活随拍与碎片</strong>：包含西湖边的猫对视、拼乐高过程、手机加载画面等日常片段，标题风格网络化（如“炸裂💥”“不儿哥们”），记录的是生活中转瞬即逝的有趣瞬间，充满少年气。</li>
+    <li><strong>试水性质投稿</strong>：早期视频多为几秒到一分钟的极短视频，内容涵盖算术（17-8）、童年回忆等，更像是熟悉剪辑和投稿功能的练手作品，也反映出新人UP主的探索过程。</li>
+</ul>
+
+<h3>3. 更新历程</h3>
+<p>UP主于2025年7月10日发布首个视频《新人up主，希望大家多多支持》，正式开启B站创作生涯。初期内容较为零散，包括乐高、动物观察、网络梗模仿等，播放量多在100-200之间。同年8月15日，他推出了《锐评北京地铁（第一期）》，意外获得718次播放，成为个人数据最好的作品。受到鼓舞后，他迅速将该系列化，8月连更两期，9月推出第三期，2026年元旦发布第四期，形成了稳定的创作方向。尽管视频制作仍显粗糙——固定机位、无剪辑、纯口语表达——但这种未经雕琢的真实感反而成为他的特色。从播放量数据看，锐评地铁系列明显高于其他内容，说明他已经找到了适合自己的赛道。作为一位“初一小学生”，他的更新频率不算高，但保持着季度性产出，未来如果能在地铁系列基础上增加更多观察角度或制作亮点，有望吸引更多同好关注。</p>
+
+        </article>
+      </section>
+
+      <!-- 卡片3：历史数据 -->
+      <section class="card history-cards">
+        <div class="history-title">📊 历史快照 (定时更新)</div>
+        <div class="cards-grid" id="historyCards">        <div class="history-card">
+          <div class="card-date">2026-03-19 19:15</div>
+          <div class="card-count">11</div>
+          <div class="card-change ">—</div>
+        </div>        <div class="history-card">
+          <div class="card-date">2026-03-19 20:11</div>
+          <div class="card-count">11</div>
+          <div class="card-change negative">+0</div>
+        </div></div>
+      </section>
+    </div>
+
+    <footer class="global-footer">
+      来自Bilibili 实时大屏 · 历史数据约每小时更新，实时粉丝数约每5秒刷新<br />
+      本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
+    </footer>
+
+    <script>
+      const BILIBILI_UID = '3546748062534420';
+      const TOTAL_GOAL = 50;
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>

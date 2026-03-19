@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{bilibili_name}}|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
+    <title>联合国|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
     <style>
       :root {
-        --marker_1_display: {{marker_1_display}};
-        --marker_1_progress: {{marker_1_progress}};
-        --marker_2_display: {{marker_2_display}};
-        --marker_2_progress: {{marker_2_progress}};
-        --marker_3_display: {{marker_3_display}};
-        --marker_3_progress: {{marker_3_progress}};
-        --total_progress: {{total_progress}};
+        --marker_1_display: none;
+        --marker_1_progress: 0;
+        --marker_2_display: none;
+        --marker_2_progress: 0;
+        --marker_3_display: none;
+        --marker_3_progress: 0;
+        --total_progress: 5000000;
       }
     </style>
     <link rel="stylesheet" href="index.css" />
@@ -22,11 +22,11 @@
       <!-- 卡片4：关注引导 -->
       <section class="card link-card">
         <a
-          href="https://space.bilibili.com/{{bilibili_uid}}"
+          href="https://space.bilibili.com/1649919642"
           target="_blank"
           class="follow-button"
         >
-          立刻去B站关注{{bilibili_name}} 🚀
+          立刻去B站关注联合国 🚀
         </a>
         <a
           href="./"
@@ -41,35 +41,35 @@
       <section class="card fans-card">
         <div class="fans-section">
           <div id="changeToast" class="change-toast"></div>
-          <div class="big-fans" id="fansDisplay">{{fans_count}}</div>
+          <div class="big-fans" id="fansDisplay">4034292</div>
           <div class="progress-container">
             <div
               class="progress-fill"
               id="progressFill"
-              style="width: {{progress_width}};"
+              style="width: 36675.38%;"
             ></div>
             <div
               class="progress-marker marker-1"
-              title="达到{{marker_1_progress}}粉丝后{{marker_1_text}}"
+              title="达到0粉丝后—"
             >
-              <span>目标1：{{marker_1_progress}}（{{marker_1_text}}）</span>
+              <span>目标1：0（—）</span>
             </div>
             <div
               class="progress-marker marker-2"
-              title="达到{{marker_2_progress}}粉丝后{{marker_2_text}}"
+              title="达到0粉丝后—"
             >
-              <span>目标2：{{marker_2_progress}}（{{marker_2_text}}）</span>
+              <span>目标2：0（—）</span>
             </div>
             <div
               class="progress-marker marker-3"
-              title="达到{{marker_3_progress}}粉丝后{{marker_3_text}}"
+              title="达到0粉丝后—"
             >
-              <span>目标3：{{marker_3_progress}}（{{marker_3_text}}）</span>
+              <span>目标3：0（—）</span>
             </div>
           </div>
           <div class="goal-text">
             <span>0</span>
-            <span>{{total_progress}}</span>
+            <span>5000000</span>
           </div>
         </div>
       </section>
@@ -77,26 +77,32 @@
       <!-- 卡片2：里程碑文章 -->
       <section class="card article-card">
         <article>
-          <h2>{{bilibili_name}} Up介绍</h2>
-          {{up_description}}
+          <h2>联合国 Up介绍</h2>
+          
+<p><em>该Up暂无描述，正在努力完善。</em></p>
+
         </article>
       </section>
 
       <!-- 卡片3：历史数据 -->
       <section class="card history-cards">
         <div class="history-title">📊 历史快照 (定时更新)</div>
-        <div class="cards-grid" id="historyCards">{{history_cards}}</div>
+        <div class="cards-grid" id="historyCards">        <div class="history-card">
+          <div class="card-date">2026-03-19 21:19</div>
+          <div class="card-count">4034292</div>
+          <div class="card-change ">—</div>
+        </div></div>
       </section>
     </div>
 
     <footer class="global-footer">
-      来自Bilibili 实时大屏 · 历史数据约每小时更新，实时粉丝数约每5秒刷新<br />
+      来自Bilibili 实时大屏 · 历史数据每日更新1~2次，实时粉丝数约每5秒刷新<br />
       本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
     </footer>
 
     <script>
-      const BILIBILI_UID = '{{bilibili_uid}}';
-      const TOTAL_GOAL = {{total_progress}};
+      const BILIBILI_UID = '1649919642';
+      const TOTAL_GOAL = 5000000;
     </script>
     <script src="index.js"></script>
   </body>

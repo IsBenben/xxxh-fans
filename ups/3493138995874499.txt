@@ -1,4 +1,4 @@
-{"name":"bili_wangac","marker":[{"progress":500,"text":"2026中旬目标"}],"total_progress":1000}
+{"name":"bili_wangac","marker":[{"progress":500,"text":"2026中旬目标"}],"total_progress":1000,"weight":50}
 
 <h3>简介</h3>
 <p>这位UP主是一位深藏不露的技术型创作者，从2023年起在B站分享编程与Minecraft的奇妙碰撞。他的视频既有硬核的Python、Scratch教程，也有天马行空的Minecraft创意实验——比如用谷歌翻译“鞭尸”游戏、统计三界方块数量，甚至自己动手给Scratch设计了一门编程语言。个性签名指向GitHub主页，透露出他乐于开源、喜欢折腾的极客精神。虽然粉丝数不算多，但每个作品都透着“用代码玩出花”的巧思，堪称学生党中的技术流宝藏UP主。</p>
