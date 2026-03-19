@@ -3,282 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>bili_wangac粉丝 - Bilibili 实时大屏</title>
+    <title>bili_wangac|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
     <style>
-      * {
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-      }
-      body {
-          font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-          background: linear-gradient(145deg, #f0f2f5 0%, #e6e9f0 100%);
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 2rem 1rem;
-      }
-
-      /* 卡片容器：控制最大宽度，垂直间距 */
-      .cards-container {
-          max-width: 1200px;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          gap: 1.8rem;
-      }
-
-      /* 通用卡片样式 */
-      .card {
-          background: rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border-radius: 40px;
-          box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
-          padding: 2rem 2.2rem;
-          border: 1px solid rgba(255, 255, 255, 0.5);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      }
-
-      /* 大字粉丝数卡片内部布局 */
-      .fans-section {
-          text-align: center;
-          position: relative;
-      }
-
-      .change-toast {
-          position: absolute;
-          top: -30px;
-          left: 50%;
-          transform: translateX(-50%);
-          font-size: 1.8rem;
-          font-weight: bold;
-          color: #ff5e7c;
-          opacity: 0;
-          pointer-events: none;
-          transition: all 0.3s ease;
-          z-index: 10;
-      }
-
-      .change-toast.show {
-          opacity: 1;
-          transform: translateX(-50%) translateY(-20px) scale(0.5);
-      }
-
-      .big-fans {
-          font-size: 6rem;
-          font-weight: 800;
-          background: linear-gradient(135deg, #1e2b3c, #0b1a2a);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          line-height: 1.2;
-          text-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      .progress-container {
-          margin: 1.5rem 0 0.5rem;
-          position: relative;
-          height: 24px;
-          background: rgba(0, 0, 0, 0.1);
-          border-radius: 30px;
-          overflow: visible;
-          box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
-      }
-
-      .progress-fill {
-          height: 100%;
-          width: 0%;
-          background: linear-gradient(90deg, #3b8cff, #9f7aff);
-          border-radius: 30px;
-          transition: width 0.5s ease;
-          position: relative;
-          z-index: 1;
-      }
-
-      .progress-marker {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 6px;
-          height: 32px;
-          background: #222;
-          border-radius: 6px;
-          z-index: 2;
-          box-shadow: 0 2px 8px black;
-      }
-
-      .progress-marker span {
-        position: absolute;
-        bottom: -1.5em;
-        right: -1px;
-        width: max-content;
-      }
-
-      .marker-1 {
-          display: block;
-          left: calc(500 / 1000 * 100%);
-      }
-
-      .marker-2 {
-          display: none;
-          left: calc(0 / 1000 * 100%);
-      }
-
-      .marker-3 {
-          display: none;
-          left: calc(0 / 1000 * 100%);
-      }
-
-      .goal-text {
-          display: flex;
-          justify-content: space-between;
-          font-size: 1rem;
-          color: #2d3a4f;
-          font-weight: 500;
-          margin: 0.5rem 0 0;
-      }
-
-      /* 文章卡片（独立） */
-      .article-card {
-          /* 直接使用 .card 样式，无需额外 */
-      }
-
-      .article-card article {
-          /* 移除内联 margin-top，由卡片内边距控制 */
-          color: #2f405c;
-      }
-
-      .article-card h2 {
-          font-size: 1.5rem;
-          font-weight: 600;
-          color: #1e2b3c;
-          margin-bottom: 1rem;
-          border-left: 6px solid #3b8cff;
-          padding-left: 1rem;
-      }
-
-      .article-card p {
-          margin: 0.75rem 0;
-          font-size: 1.05rem;
-          line-height: 1.5;
-          color: #2f405c;
-      }
-
-      .article-card p:last-child {
-          margin-bottom: 0;
-      }
-
-      /* 历史数据卡片 */
-      .history-cards .history-title {
-          font-size: 1.8rem;
-          font-weight: 600;
-          color: #1e2b3c;
-          margin-bottom: 1.8rem;
-          border-left: 8px solid #3b8cff;
-          padding-left: 1rem;
-      }
-
-      .cards-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-          gap: 1.2rem;
-      }
-
-      .history-cards .history-card {
-          background: white;
-          border-radius: 24px;
-          padding: 1.2rem 0.8rem;
-          box-shadow: 0 10px 20px -8px rgba(0, 20, 40, 0.2);
-          transition: transform 0.2s, box-shadow 0.2s;
-          border: 1px solid rgba(255, 255, 255, 0.7);
-          backdrop-filter: blur(4px);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-      }
-
-      .history-cards .history-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 30px -10px rgba(0, 40, 80, 0.3);
-      }
-
-      .card-date {
-          font-size: 0.85rem;
-          color: #5e6f8d;
-          margin-bottom: 0.5rem;
-          font-weight: 500;
-      }
-
-      .card-count {
-          font-size: 1.8rem;
-          font-weight: 700;
-          color: #0a1a2b;
-          line-height: 1.2;
-      }
-
-      .card-change {
-          font-size: 1.2rem;
-          font-weight: 600;
-          margin-top: 0.3rem;
-          padding: 0.2rem 0.8rem;
-          border-radius: 40px;
-          background: #f0f4fe;
-      }
-
-      .card-change.positive {
-          color: #2b8c5e;
-      }
-
-      .card-change.negative {
-          color: #d03164;
-      }
-
-      /* 全局页脚 */
-      .global-footer {
-          margin-top: 2rem;
-          font-size: 0.9rem;
-          color: #8a9bb5;
-          text-align: center;
-          max-width: 1200px;
-          width: 100%;
-      }
-
-              /* 关注按钮卡片 */
-      .link-card {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 1.5rem;  /* 调整内边距，让按钮更突出 */
-      }
-      .follow-button {
-          display: inline-block;
-          background: linear-gradient(135deg, #fb7299, #ff8fab);
-          color: white;
-          font-size: 1.5rem;
-          font-weight: 600;
-          padding: 1rem 2.5rem;
-          border-radius: 60px;
-          text-decoration: none;
-          box-shadow: 0 10px 20px -5px rgba(251, 114, 153, 0.4);
-          transition: transform 0.2s, box-shadow 0.2s;
-          border: 1px solid rgba(255,255,255,0.3);
-          backdrop-filter: blur(4px);
-          letter-spacing: 1px;
-      }
-      .follow-button:hover {
-          transform: scale(1.05);
-          box-shadow: 0 15px 30px -5px rgba(251, 114, 153, 0.6);
-          background: linear-gradient(135deg, #ff859f, #ff9fbb);
+      :root {
+        --marker_1_display: block;
+        --marker_1_progress: 500;
+        --marker_2_display: none;
+        --marker_2_progress: 0;
+        --marker_3_display: none;
+        --marker_3_progress: 0;
+        --total_progress: 1000;
       }
     </style>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
     <div class="cards-container">
@@ -287,10 +24,16 @@
         <a
           href="https://space.bilibili.com/3493138995874499"
           target="_blank"
-          rel="noopener noreferrer"
           class="follow-button"
         >
           立刻去B站关注bili_wangac 🚀
+        </a>
+        <a
+          href="./"
+          target="_blank"
+          class="follow-button"
+        >
+          返回首页 ◀
         </a>
       </section>
 
@@ -298,20 +41,29 @@
       <section class="card fans-card">
         <div class="fans-section">
           <div id="changeToast" class="change-toast"></div>
-          <div class="big-fans" id="fansDisplay">315</div>
+          <div class="big-fans" id="fansDisplay">316</div>
           <div class="progress-container">
             <div
               class="progress-fill"
               id="progressFill"
-              style="width: 2.86%;"
+              style="width: 2.87%;"
             ></div>
-            <div class="progress-marker marker-1" title="达到500粉丝后2026中旬目标">
+            <div
+              class="progress-marker marker-1"
+              title="达到500粉丝后2026中旬目标"
+            >
               <span>目标1：500（2026中旬目标）</span>
             </div>
-            <div class="progress-marker marker-2" title="达到0粉丝后—">
+            <div
+              class="progress-marker marker-2"
+              title="达到0粉丝后—"
+            >
               <span>目标2：0（—）</span>
             </div>
-            <div class="progress-marker marker-3" title="达到0粉丝后—">
+            <div
+              class="progress-marker marker-3"
+              title="达到0粉丝后—"
+            >
               <span>目标3：0（—）</span>
             </div>
           </div>
@@ -347,132 +99,105 @@
       <!-- 卡片3：历史数据 -->
       <section class="card history-cards">
         <div class="history-title">📊 历史快照 (定时更新)</div>
-        <div class="cards-grid" id="historyCards">
-        <div class="history-card">
+        <div class="cards-grid" id="historyCards">        <div class="history-card">
           <div class="card-date">2026-03-18 21:00</div>
           <div class="card-count">315</div>
           <div class="card-change ">—</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-18 21:12</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-18 21:48</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-18 23:18</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 00:39</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 01:41</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 03:15</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 04:02</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 04:51</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 05:45</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 06:42</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 07:38</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 07:56</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 11:16</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 13:12</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 14:36</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 15:33</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 16:05</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 16:57</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        
-        <div class="history-card">
+        </div>        <div class="history-card">
           <div class="card-date">2026-03-19 17:57</div>
           <div class="card-count">315</div>
           <div class="card-change negative">+0</div>
-        </div>
-        </div>
+        </div>        <div class="history-card">
+          <div class="card-date">2026-03-19 19:08</div>
+          <div class="card-count">315</div>
+          <div class="card-change negative">+0</div>
+        </div>        <div class="history-card">
+          <div class="card-date">2026-03-19 19:15</div>
+          <div class="card-count">315</div>
+          <div class="card-change negative">+0</div>
+        </div>        <div class="history-card">
+          <div class="card-date">2026-03-19 20:11</div>
+          <div class="card-count">316</div>
+          <div class="card-change positive">+1</div>
+        </div></div>
       </section>
     </div>
 
     <footer class="global-footer">
-      数据约每小时更新 · 实时粉丝数约每5秒刷新
+      来自Bilibili 实时大屏 · 历史数据约每小时更新，实时粉丝数约每5秒刷新<br />
+      本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
     </footer>
 
     <script>

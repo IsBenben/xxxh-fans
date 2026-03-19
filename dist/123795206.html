@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>地球百科君|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
+    <style>
+      :root {
+        --marker_1_display: none;
+        --marker_1_progress: 0;
+        --marker_2_display: none;
+        --marker_2_progress: 0;
+        --marker_3_display: none;
+        --marker_3_progress: 0;
+        --total_progress: 1000000;
+      }
+    </style>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="cards-container">
+      <!-- 卡片4：关注引导 -->
+      <section class="card link-card">
+        <a
+          href="https://space.bilibili.com/123795206"
+          target="_blank"
+          class="follow-button"
+        >
+          立刻去B站关注地球百科君 🚀
+        </a>
+        <a
+          href="./"
+          target="_blank"
+          class="follow-button"
+        >
+          返回首页 ◀
+        </a>
+      </section>
+
+      <!-- 卡片1：大字粉丝数 -->
+      <section class="card fans-card">
+        <div class="fans-section">
+          <div id="changeToast" class="change-toast"></div>
+          <div class="big-fans" id="fansDisplay">558329</div>
+          <div class="progress-container">
+            <div
+              class="progress-fill"
+              id="progressFill"
+              style="width: 5075.72%;"
+            ></div>
+            <div
+              class="progress-marker marker-1"
+              title="达到0粉丝后—"
+            >
+              <span>目标1：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-2"
+              title="达到0粉丝后—"
+            >
+              <span>目标2：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-3"
+              title="达到0粉丝后—"
+            >
+              <span>目标3：0（—）</span>
+            </div>
+          </div>
+          <div class="goal-text">
+            <span>0</span>
+            <span>1000000</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 卡片2：里程碑文章 -->
+      <section class="card article-card">
+        <article>
+          <h2>地球百科君 Up介绍</h2>
+          
+<h3>简介</h3>
+<p>地球百科君，B站知名科普与地理推理UP主，自2017年活跃至今，凭借“网络迷踪”系列开创了独特的推理侦探赛道。他以卫星地图、街景、夜景图为线索，带领观众一起寻找网络热门视频的拍摄地、破解地理谜题、打假网络谣言。截至2026年3月，累计发布超千条视频，总播放量数亿，是B站地理科普领域的代表人物之一。</p>
+
+<h3>主要更新内容</h3>
+<ul>
+<li><strong>网络迷踪·地理推理侦探挑战赛</strong>：UP主的王牌系列，每期根据一张图片或一段视频（夜景、公路、大桥、机场等），通过地理特征、车牌、地标等信息，抽丝剥茧定位拍摄地。从“悬赏99猜有三座桥的河谷”到“一张照片找到你在哪？48小时极限挑战”，兼具知识性与互动性。</li>
+<li><strong>辟谣与打假</strong>：针对网络流传的各类“奇观”视频进行实地或图源考证，如“海市蜃楼”“两个太阳”“沙漠洪水”“南极冰墙”等，用严谨的地理分析还原真相，破除谣言。</li>
+<li><strong>地理冷知识与盘点</strong>：涵盖地名趣谈（“床上村床下村”）、奇葩建筑（“冰棍楼”）、交通奇观（“双向40车道”“没人敢插队的路”）、地质现象（“喊水泉”）等，内容轻松有趣，适合碎片化学习。</li>
+<li><strong>社会热点与历史地理</strong>：结合时事分析地理位置（如缅北冲突、巴以问题），或考证历史地名（“拉达克故土”“白龙尾岛”），展现地理的现实意义。</li>
+</ul>
+
+<h3>更新历程</h3>
+<p>地球百科君的创作之路始于2017年，早期以桂林字牌等地方游戏内容为主，粉丝量有限。2021年起，他敏锐抓住“网络热门视频鉴定”与“地理推理”的风口，推出“侦探挑战赛”系列，凭借“凭一张照片找到具体位置”“寻找荒岛求生拍摄地”等内容迅速积累人气。2022年是爆发期，多期视频突破百万播放，“坑人的网红天梯”“双向40车道”“太平洋海水不相融辟谣”等成为现象级作品。2023-2024年，他将系列正式定名为“网络迷踪·地理推理侦探挑战赛”，并引入悬赏机制，互动性进一步增强。2025年后，更新节奏保持稳定，同时尝试“48小时极限挑战”等升级玩法。从最初几十播放的试探，到如今单期最高超800万播放，地球百科君用七年时间，将地理推理做成了自己独一无二的标签，也为无数网友打开了用卫星视角看世界的新大门。</p>
+        </article>
+      </section>
+
+      <!-- 卡片3：历史数据 -->
+      <section class="card history-cards">
+        <div class="history-title">📊 历史快照 (定时更新)</div>
+        <div class="cards-grid" id="historyCards">        <div class="history-card">
+          <div class="card-date">2026-03-19 21:02</div>
+          <div class="card-count">558329</div>
+          <div class="card-change ">—</div>
+        </div></div>
+      </section>
+    </div>
+
+    <footer class="global-footer">
+      来自Bilibili 实时大屏 · 历史数据每日更新1~2次，实时粉丝数约每5秒刷新<br />
+      本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
+    </footer>
+
+    <script>
+      const BILIBILI_UID = '123795206';
+      const TOTAL_GOAL = 1000000;
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>

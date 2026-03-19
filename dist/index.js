@@ -25,7 +25,7 @@ function showChange(change) {
 async function fetchFans() {
     try {
         // 添加一个包含常见浏览器请求头的对象
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL + '&time=' + Date.now());
         const data = await response.json();
         if (data.code === 0) {
             const newFans = data.data.follower;

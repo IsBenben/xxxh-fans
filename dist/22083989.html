@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>节操Pro|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
+    <style>
+      :root {
+        --marker_1_display: none;
+        --marker_1_progress: 0;
+        --marker_2_display: none;
+        --marker_2_progress: 0;
+        --marker_3_display: none;
+        --marker_3_progress: 0;
+        --total_progress: 1000000;
+      }
+    </style>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="cards-container">
+      <!-- 卡片4：关注引导 -->
+      <section class="card link-card">
+        <a
+          href="https://space.bilibili.com/22083989"
+          target="_blank"
+          class="follow-button"
+        >
+          立刻去B站关注节操Pro 🚀
+        </a>
+        <a
+          href="./"
+          target="_blank"
+          class="follow-button"
+        >
+          返回首页 ◀
+        </a>
+      </section>
+
+      <!-- 卡片1：大字粉丝数 -->
+      <section class="card fans-card">
+        <div class="fans-section">
+          <div id="changeToast" class="change-toast"></div>
+          <div class="big-fans" id="fansDisplay">723622</div>
+          <div class="progress-container">
+            <div
+              class="progress-fill"
+              id="progressFill"
+              style="width: 6578.38%;"
+            ></div>
+            <div
+              class="progress-marker marker-1"
+              title="达到0粉丝后—"
+            >
+              <span>目标1：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-2"
+              title="达到0粉丝后—"
+            >
+              <span>目标2：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-3"
+              title="达到0粉丝后—"
+            >
+              <span>目标3：0（—）</span>
+            </div>
+          </div>
+          <div class="goal-text">
+            <span>0</span>
+            <span>1000000</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 卡片2：里程碑文章 -->
+      <section class="card article-card">
+        <article>
+          <h2>节操Pro Up介绍</h2>
+          
+<h3>简介</h3>
+<p>节操Pro，B站知名游戏UP主，个性签名“关注一下我吧”尽显亲和力。截至2026年3月，已吸引72.4万粉丝关注，累计播放量超6300万。他以《我的世界》创意挑战系列闻名，凭借天马行空的脑洞和高能操作，将起床战争、极限生存等经典玩法玩出新意。“游戏加速100倍+极限模式+一格物品栏通关MC”等代表作屡创百万播放，是MC创新内容领域的代表人物之一。</p>
+
+<h3>主要更新内容</h3>
+<ul>
+<li><strong>起床战争创意系列</strong>：对经典起床战争模式进行魔改，每个视频设定一个颠覆性规则——商店可购买命令方块、所有玩家创造模式、攻击距离1000格、用精灵球捕捉对手、1000个Dream帮忙守家等，将小游戏玩出无限可能。</li>
+<li><strong>极限挑战系列</strong>：挑战极限模式下的地狱难度设定，如“加速100倍+一格物品栏通关MC”“一格物品栏+生物物品会爆炸”“一格物品栏挑战凋零风暴”等，展现超高游戏理解和操作技巧。</li>
+<li><strong>脑洞生存玩法</strong>：围绕特定机制开发全新生存体验，如“每升一级长一只手”“巨人使用望远镜后生物都会变大”“拥有望远镜选择发射核弹还是透视”等，将创意玩法与生存挑战结合。</li>
+<li><strong>技术向内容</strong>：尝试引入AI辅助创作，如“最强AI帮我做了一个4000行代码的Boss”系列，探索AI与游戏内容的跨界融合，展现技术探索精神。</li>
+</ul>
+
+<h3>更新历程</h3>
+<p>节操Pro于2022年4月发布首个爆款《MC极限追杀！当你被5名猎人追杀！》，以53分钟长视频斩获410万播放，一举奠定创作方向。此后保持高产节奏，2022-2023年间密集推出“起床战争”魔改系列，凭借“每个队伍随机一个玩家创造”“所有人都100级无限速度和跳跃”“商店只卖烈焰弹”等创意持续引爆流量，多期作品稳定在50-150万播放区间。2023年下半年开始挑战更高难度的一格物品栏系列，“加速100倍通关MC”以1475万播放成为现象级作品，“一格物品栏挑战凋零风暴”也收获465万播放，标志着他从玩法创意向硬核挑战的进阶。2024年更新频率有所放缓，但“100倍加速一格物品栏通关”仍创下个人数据新高。从早期“起床战争”魔改到后期极限挑战，节操Pro始终保持着对游戏机制的深度挖掘能力，用持续不断的创意征服观众——正如他的签名“关注一下我吧”，这位脑洞UP主的下一期视频，永远值得期待。</p>
+
+        </article>
+      </section>
+
+      <!-- 卡片3：历史数据 -->
+      <section class="card history-cards">
+        <div class="history-title">📊 历史快照 (定时更新)</div>
+        <div class="cards-grid" id="historyCards">        <div class="history-card">
+          <div class="card-date">2026-03-19 21:02</div>
+          <div class="card-count">723622</div>
+          <div class="card-change ">—</div>
+        </div></div>
+      </section>
+    </div>
+
+    <footer class="global-footer">
+      来自Bilibili 实时大屏 · 历史数据每日更新1~2次，实时粉丝数约每5秒刷新<br />
+      本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
+    </footer>
+
+    <script>
+      const BILIBILI_UID = '22083989';
+      const TOTAL_GOAL = 1000000;
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>

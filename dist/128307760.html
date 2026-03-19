@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>李飞雪_|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
+    <style>
+      :root {
+        --marker_1_display: none;
+        --marker_1_progress: 0;
+        --marker_2_display: none;
+        --marker_2_progress: 0;
+        --marker_3_display: none;
+        --marker_3_progress: 0;
+        --total_progress: 1000000;
+      }
+    </style>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="cards-container">
+      <!-- 卡片4：关注引导 -->
+      <section class="card link-card">
+        <a
+          href="https://space.bilibili.com/128307760"
+          target="_blank"
+          class="follow-button"
+        >
+          立刻去B站关注李飞雪_ 🚀
+        </a>
+        <a
+          href="./"
+          target="_blank"
+          class="follow-button"
+        >
+          返回首页 ◀
+        </a>
+      </section>
+
+      <!-- 卡片1：大字粉丝数 -->
+      <section class="card fans-card">
+        <div class="fans-section">
+          <div id="changeToast" class="change-toast"></div>
+          <div class="big-fans" id="fansDisplay">905675</div>
+          <div class="progress-container">
+            <div
+              class="progress-fill"
+              id="progressFill"
+              style="width: 8233.41%;"
+            ></div>
+            <div
+              class="progress-marker marker-1"
+              title="达到0粉丝后—"
+            >
+              <span>目标1：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-2"
+              title="达到0粉丝后—"
+            >
+              <span>目标2：0（—）</span>
+            </div>
+            <div
+              class="progress-marker marker-3"
+              title="达到0粉丝后—"
+            >
+              <span>目标3：0（—）</span>
+            </div>
+          </div>
+          <div class="goal-text">
+            <span>0</span>
+            <span>1000000</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 卡片2：里程碑文章 -->
+      <section class="card article-card">
+        <article>
+          <h2>李飞雪_ Up介绍</h2>
+          
+<h3>简介</h3>
+<p>李飞雪_，B站超高产的游戏UP主，个性签名简单朴实“感谢你的关注”。粉丝数接近百万量级，累计播放量超4亿次。他以《我的世界》创意生存挑战闻名，凭借“当所有物品都无法堆叠我该如何生存”“当我必须击败随机生物才能离开区块”等脑洞大开的选题，将MC玩出无限可能，是沙盒游戏创意领域的代表人物之一。</p>
+
+<h3>主要更新内容</h3>
+<ul>
+<li><strong>MC创意生存系列</strong>：核心内容，每期设定一个颠覆性规则——所有物品无法堆叠、所有生物变成骑兵、每10秒随机快捷栏、受伤随机传送一万格、必须击败随机生物才能离开区块等，将生存挑战玩出新高度。</li>
+<li><strong>极限挑战与魔改玩法</strong>：对经典玩法进行极限改造，如“当所有物品都需要购买”“当我每60秒就要干掉自己一次”“当所有生物攻击都没有冷却”，展现超高游戏理解和创意策划能力。</li>
+<li><strong>热门模组与地图实况</strong>：涵盖寄生虫模组、幸运方块、空岛生存、恐怖解密地图等多元内容，“我是寄生虫”系列总播放量破千万，“恐怖岛生存100天”系列成为经典。</li>
+<li><strong>宝可梦与跨界内容</strong>：包含《我的世界》宝可梦模组生存、宝可梦主系列游戏随机挑战（绿宝石、心金、朱紫等），以及禁闭求生、森林之子等热门游戏的实况记录，展现多品类创作能力。</li>
+</ul>
+
+<h3>更新历程</h3>
+<p>李飞雪_于2021年开始系统更新MC内容，早期以“石方块第三季”“恐怖岛生存100天”等长系列积累核心粉丝。2022-2023年进入高产期，“我是寄生虫”系列以史诗级叙事收获千万播放，“恐怖岛生存100天”单期最高33万播放。2024年起创作方向进一步多元化，“只有石头的世界”“九选一随机空岛”“当所有区块都需要购买”等创意选题频出爆款。2025年下半年迎来爆发式增长，“当我必须要受伤才能扩大世界？第一期”播放量突破1000万，“最合理的一集！”斩获636万播放，“宝宝世界”“当我们走过的区块都会随机变换”等视频持续引爆流量。2026年延续高产节奏，“当我们相隔千里但是每2分钟就会互换位置”“当我们成为了MC的反派角色”等新作均突破180万播放。从早期长系列到如今日更级的创意短视频，李飞雪_始终保持着惊人的创作活力和脑洞——正如他四年前的第一条视频，下一期永远值得期待。</p>
+
+        </article>
+      </section>
+
+      <!-- 卡片3：历史数据 -->
+      <section class="card history-cards">
+        <div class="history-title">📊 历史快照 (定时更新)</div>
+        <div class="cards-grid" id="historyCards">        <div class="history-card">
+          <div class="card-date">2026-03-19 21:02</div>
+          <div class="card-count">905675</div>
+          <div class="card-change ">—</div>
+        </div></div>
+      </section>
+    </div>
+
+    <footer class="global-footer">
+      来自Bilibili 实时大屏 · 历史数据每日更新1~2次，实时粉丝数约每5秒刷新<br />
+      本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
+    </footer>
+
+    <script>
+      const BILIBILI_UID = '128307760';
+      const TOTAL_GOAL = 1000000;
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>
