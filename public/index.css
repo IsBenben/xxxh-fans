@@ -200,6 +200,7 @@ body {
 
 /* 历史图表卡片（SVG 由 index.js 绘制） */
 .chart-wrap {
+    position: relative;   /* 弹窗定位基准 */
     width: 100%;
 }
 
@@ -248,6 +249,46 @@ body {
     fill: #ff5e7c;
     stroke: #ffffff;
     stroke-width: 1.5;
+}
+
+/* 悬停参考线与标记（默认隐藏，hover 时显示） */
+.chart-hover {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+}
+
+.chart-guide {
+    stroke: rgba(20, 40, 80, 0.4);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+}
+
+.chart-hover-dot {
+    fill: #ffffff;
+    stroke: #3b8cff;
+    stroke-width: 2;
+}
+
+/* 跟随鼠标的弹窗 */
+.chart-tooltip {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    pointer-events: none;
+    max-width: 240px;
+    background: rgba(20, 30, 45, 0.92);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.45);
+}
+
+.chart-tooltip strong {
+    color: #9fc2ff;
+    font-weight: 600;
 }
 
 /* 推荐Up卡片：复用 ups-cards-grid / follow-button 按钮样式 */
