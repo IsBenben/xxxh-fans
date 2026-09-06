@@ -3,7 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{bilibili_name}}|查询B站Up简介_实时粉丝数_历史数据_直观展示-Bilibili实时大屏</title>
+    <title>{{page_title}}</title>
+    <meta name="description" content="{{meta_description}}" />
+    <link rel="canonical" href="{{canonical_url}}" />
+    <meta property="og:site_name" content="Bilibili 实时大屏" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{page_title}}" />
+    <meta property="og:description" content="{{meta_description}}" />
+    <meta property="og:url" content="{{canonical_url}}" />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json">{{json_ld}}</script>
     <style>
       :root {
         --marker_1_display: {{marker_1_display}};
@@ -18,23 +27,29 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
+    <!-- 页面标题（与首页一致：H1 置于所有卡片之上） -->
+    <header class="site-header">
+      <h1>{{bilibili_name}}</h1>
+    </header>
     <div class="cards-container">
       <!-- 卡片4：关注引导 -->
       <section class="card link-card">
-        <a
-          href="https://space.bilibili.com/{{bilibili_uid}}"
-          target="_blank"
-          class="follow-button"
-        >
-          立刻去B站关注{{bilibili_name}} 🚀
-        </a>
-        <a
-          href="./"
-          target="_blank"
-          class="follow-button"
-        >
-          返回首页 ◀
-        </a>
+        <div class="link-card-actions">
+          <a
+            href="https://space.bilibili.com/{{bilibili_uid}}"
+            target="_blank"
+            class="follow-button"
+          >
+            立刻去B站关注{{bilibili_name}} 🚀
+          </a>
+          <a
+            href="./"
+            target="_blank"
+            class="follow-button"
+          >
+            返回首页 ◀
+          </a>
+        </div>
       </section>
 
       <!-- 卡片1：大字粉丝数 -->
@@ -78,6 +93,7 @@
       <section class="card article-card">
         <article>
           <h2>{{bilibili_name}} Up介绍</h2>
+          <p class="page-description">{{meta_description}}</p>
           {{up_description}}
         </article>
       </section>
@@ -109,7 +125,8 @@
     <script>
       const BILIBILI_UID = '{{bilibili_uid}}';
       const TOTAL_GOAL = {{total_progress}};
-      // 历史图表数据：[{t: 时间戳(epoch秒), c: 粉丝数}]，时间点不均匀
+      // 历史图表/快照折叠块数据：[{t: 时间戳(epoch秒), c: 粉丝数}]，时间点不均匀；
+      // 前后端分离：日期文本一律由前端依据 t 用已有时间戳->日期函数渲染
       // 用 var（而非 const）声明，使其同时挂载为 window.HISTORY_DATA
       var HISTORY_DATA = {{history_data}};
     </script>
