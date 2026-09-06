@@ -1,5 +1,22 @@
-// 请将 UID 替换为你的 B站 UID
-const API_URL = `https://api.codetabs.com/v1/proxy/?quest=https://api.bilibili.com/x/relation/stat?vmid=${BILIBILI_UID}`;
+// B站粉丝数实时刷新：bilibili 官方接口不带 CORS 头，需经 CORS 代理访问
+const biliApiUrl = () =>
+    `https://api.bilibili.com/x/relation/stat?vmid=${BILIBILI_UID}&time=${Date.now()}`;
+
+// CORS 代理候选，按顺序尝试，成功即停（免费代理偶发故障，故保留后备）
+const PROXY_LIST = [
+    (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    (u) => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(u)}`,
+];
+
+async function fetchWithTimeout(url, ms = 10000) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), ms);
+    try {
+        return await fetch(url, { signal: ctrl.signal });
+    } finally {
+        clearTimeout(timer);
+    }
+}
 
 const fansDisplay = document.getElementById('fansDisplay');
 const progressFill = document.getElementById('progressFill');
@@ -23,24 +40,30 @@ function showChange(change) {
 }
 
 async function fetchFans() {
-    try {
-        // 添加一个包含常见浏览器请求头的对象
-        const response = await fetch(API_URL + '&time=' + Date.now());
-        const data = await response.json();
-        if (data.code === 0) {
-            const newFans = data.data.follower;
-            if (newFans !== currentFans) {
-                const change = newFans - currentFans;
-                currentFans = newFans;
-                fansDisplay.innerText = newFans;
-                updateProgress(newFans);
-                showChange(change);
+    // 逐个代理尝试：拿到 code===0 即成功；单次请求 8s 超时
+    for (const buildUrl of PROXY_LIST) {
+        let ok = false;
+        try {
+            const response = await fetchWithTimeout(buildUrl(biliApiUrl()));
+            const data = await response.json();
+            if (data.code === 0) {
+                const newFans = data.data.follower;
+                if (newFans !== currentFans) {
+                    const change = newFans - currentFans;
+                    currentFans = newFans;
+                    fansDisplay.innerText = newFans;
+                    updateProgress(newFans);
+                    showChange(change);
+                }
+                ok = true; // 通道可用，结束尝试
+            } else {
+                console.error('API error:', data);
+                ok = true; // 通道正常但接口报错，换通道无意义
             }
-        } else {
-            console.error('API error:', data);
+        } catch (error) {
+            console.error('Proxy failed, try next:', buildUrl(biliApiUrl()), error);
         }
-    } catch (error) {
-        console.error('Fetch failed:', error);
+        if (ok) break;
     }
     setTimeout(() => {
         fetchFans();
@@ -227,12 +250,29 @@ function drawHistoryChart() {
         return target - times[lo] <= times[hi] - target ? lo : hi;
     };
 
-    svg.addEventListener('mousemove', (ev) => {
-        // 鼠标位置 -> viewBox 坐标 -> 时间轴位置 -> 最近采样点
+    // 竖屏手机 CSS 将 svg 旋转 90°（时间轴视觉上变为纵向）时的几何判定
+    const isRotatedChart = () =>
+        window.matchMedia &&
+        window.matchMedia('(max-width: 640px) and (orientation: portrait)').matches;
+
+    // 屏幕坐标 -> 最近采样点。
+    // 未旋转：沿 svg 可视宽度（X）采样；旋转后：时间轴沿可视高度（Y）排列，
+    // svg.getBoundingClientRect() 返回的是旋转后的外接框，采样 Y 即等价于原时间轴 X。
+    const sampleFromPointer = (clientX, clientY) => {
         const sRect = svg.getBoundingClientRect();
-        const vx = ((ev.clientX - sRect.left) / sRect.width) * W;
+        const rotated = isRotatedChart();
+        const frac = rotated
+            ? (clientY - sRect.top) / sRect.height
+            : (clientX - sRect.left) / sRect.width;
+        const vx = Math.min(1, Math.max(0, frac)) * W;
         const target = tMin + ((vx - M.left) / innerW) * tSpan;
-        const p = data[closestIndex(target)];
+        return data[closestIndex(target)];
+    };
+
+    // 在参考线/标记点/弹窗上展示某个采样点（参考线与标记绘制在 svg 内部，
+    // 旋转模式下会随图表一起旋转到正确朝向；弹窗按容器坐标跟随手指/鼠标）。
+    const showOverlayAt = (clientX, clientY) => {
+        const p = sampleFromPointer(clientX, clientY);
         const px = x(p.t);
         const py = y(p.c);
 
@@ -246,23 +286,131 @@ function drawHistoryChart() {
 
         tooltip.innerHTML = `<strong>${formatChartFullTime(p.t)}</strong><br>${p.c.toLocaleString()} 粉丝`;
 
-        // 弹窗跟随鼠标，靠近容器边缘时翻转/夹紧防溢出
         const cRect = container.getBoundingClientRect();
         tooltip.style.display = 'block';
-        let left = ev.clientX - cRect.left + 16;
-        let top = ev.clientY - cRect.top - tooltip.offsetHeight - 12;
+        let left = clientX - cRect.left + 16;
+        let top = clientY - cRect.top - tooltip.offsetHeight - 12;
         const maxLeft = cRect.width - tooltip.offsetWidth - 4;
-        if (left > maxLeft) left = ev.clientX - cRect.left - tooltip.offsetWidth - 16;
+        if (left > maxLeft) left = clientX - cRect.left - tooltip.offsetWidth - 16;
         if (left < 4) left = 4;
-        if (top < 4) top = ev.clientY - cRect.top + 16;
+        if (top < 4) top = clientY - cRect.top + 16;
         tooltip.style.left = `${left}px`;
         tooltip.style.top = `${top}px`;
-    });
+    };
 
-    svg.addEventListener('mouseleave', () => {
+    const hideOverlay = () => {
         hover.style.opacity = 0;
         tooltip.style.display = 'none';
+    };
+
+    // 桌面：鼠标悬停跟随
+    svg.addEventListener('pointermove', (ev) => {
+        if (ev.pointerType !== 'mouse' && ev.pointerType !== 'pen') return;
+        showOverlayAt(ev.clientX, ev.clientY);
     });
+    svg.addEventListener('pointerleave', () => {
+        hideOverlay();
+    });
+
+    // 移动端：点按图表显示该点详情（保留旋转几何，时间轴方向为屏幕纵向）。
+    // 不拦截默认手势，页面滚动不受影响；点击图表外部自动隐藏。
+    svg.addEventListener('click', (ev) => {
+        showOverlayAt(ev.clientX, ev.clientY);
+    });
+    document.addEventListener('click', (ev) => {
+        if (!container.contains(ev.target)) hideOverlay();
+    });
+
+    // 旋转/横竖屏切换后旧弹窗位置失效，自动隐藏
+    window.addEventListener('resize', hideOverlay);
 }
 
 drawHistoryChart();
+
+// ===== 历史快照：中间折叠块动态加载 =====
+// 服务端只渲染首尾各 50 条卡片；中间每个区间以占位行表示（主文字为起止序号，
+// 小字为起止时间）。点击后依据页面内联的 HISTORY_DATA（仅 {t, c}，日期用
+// 已有 formatChartFullTime 由 ts 渲染，前后端分离）动态渲染，可再次收起。
+function buildExpandableHistory() {
+    const grid = document.getElementById('historyCards');
+    if (!grid) return;
+    const data = typeof HISTORY_DATA !== 'undefined' ? HISTORY_DATA : [];
+
+    // 与服务端 card_html 一致：日期由 ts 格式化（YYYY-MM-DD HH:MM，与服务端 date 文本同精度）/ count / 相对上一条增减量
+    const cardHtml = (i) => {
+        const p = data[i];
+        const prev = i > 0 ? data[i - 1].c : null;
+        let changeStr = '—';
+        let changeClass = '';
+        if (prev !== null) {
+            const dlt = p.c - prev;
+            changeStr = (dlt >= 0 ? '+' : '') + dlt; // 与 Python 的 {:+.0f} 一致：0 -> '+0'
+            changeClass = dlt > 0 ? 'positive' : 'negative';
+        }
+        return `<div class="history-card"><div class="card-date">${formatChartFullTime(p.t)}</div>` +
+               `<div class="card-count">${p.c}</div>` +
+               `<div class="card-change ${changeClass}">${changeStr}</div></div>`;
+    };
+
+    const buildChunk = (start, count) => {
+        const end = Math.min(start + count, data.length);
+        let html = '';
+        for (let i = start; i < end; i++) html += cardHtml(i);
+        return html;
+    };
+
+    // 主文字用起止序号（1-based），与服务端占位行文案一致；收起态联动切换
+    const rangeText = (row) => {
+        const start = parseInt(row.dataset.start, 10);
+        const count = parseInt(row.dataset.count, 10);
+        return `${start + 1} ~ ${start + count}`;
+    };
+
+    const setLabel = (row, open) => {
+        const label = row.querySelector('.history-expand-label');
+        if (label) label.textContent = open ? `收起 ${rangeText(row)} 项目` : `展开 ${rangeText(row)} 项目`;
+        row.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    const toggle = (row) => {
+        const start = parseInt(row.dataset.start, 10);
+        const count = parseInt(row.dataset.count, 10);
+        if (!row._anchor) {
+            const anchor = document.createElement('span');
+            anchor.className = 'history-anchor'; // display:none 的定位标记
+            row.before(anchor);
+            row._anchor = anchor;
+        }
+        const anchor = row._anchor;
+        const opening = row.getAttribute('aria-expanded') !== 'true';
+
+        if (opening) {
+            // 仅首次点击时构建该块 HTML，之后复用缓存字符串
+            if (!row._html) row._html = buildChunk(start, count);
+            const wrap = document.createElement('div');
+            wrap.innerHTML = row._html;
+            while (wrap.firstChild) anchor.parentNode.insertBefore(wrap.firstChild, row);
+            setLabel(row, true);
+        } else {
+            // 收起：移除 anchor 与 row 之间的全部动态卡片
+            while (anchor.nextSibling && anchor.nextSibling !== row) {
+                anchor.parentNode.removeChild(anchor.nextSibling);
+            }
+            setLabel(row, false);
+        }
+    };
+
+    grid.addEventListener('click', (ev) => {
+        const row = ev.target.closest('.history-expand');
+        if (row) toggle(row);
+    });
+    grid.addEventListener('keydown', (ev) => {
+        const row = ev.target.closest('.history-expand');
+        if (row && (ev.key === 'Enter' || ev.key === ' ')) {
+            ev.preventDefault();
+            toggle(row);
+        }
+    });
+}
+
+buildExpandableHistory();
