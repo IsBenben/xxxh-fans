@@ -148,7 +148,10 @@ body {
     color: #2f405c;
 }
 
-.article-card h2 {
+.article-card h2,
+.chart-card h2,
+.recommend-card h2,
+.history-cards .history-title {
     font-size: 1.5rem;
     font-weight: 600;
     color: #1e2b3c;
@@ -173,29 +176,17 @@ body {
 }
 
 /* 历史数据卡片 */
-.history-cards .history-title {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #1e2b3c;
-    margin-bottom: 1.8rem;
-    border-left: 8px solid #3b8cff;
-    padding-left: 1rem;
-}
-
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1.2rem;
+    gap: 0.6rem;
 }
 
 .history-cards .history-card {
     background: white;
-    border-radius: 24px;
-    padding: 1.2rem 0.8rem;
+    padding: 0.6rem 0.4rem;
     box-shadow: 0 10px 20px -8px rgba(0, 20, 40, 0.2);
     transition: transform 0.2s, box-shadow 0.2s;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(4px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -205,6 +196,63 @@ body {
 .history-cards .history-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 30px -10px rgba(0, 40, 80, 0.3);
+}
+
+/* 历史图表卡片（SVG 由 index.js 绘制） */
+.chart-wrap {
+    width: 100%;
+}
+
+.chart-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.chart-wrap text {
+    fill: #5e6f8d;
+    font-size: 12px;
+    font-family: inherit;
+}
+
+.chart-wrap .chart-empty {
+    color: #8a9bb5;
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 1rem;
+}
+
+.chart-grid {
+    stroke: rgba(0, 20, 40, 0.1);
+    stroke-width: 1;
+}
+
+.chart-axis {
+    stroke: rgba(0, 20, 40, 0.25);
+    stroke-width: 1;
+}
+
+.chart-line {
+    fill: none;
+    stroke: #3b8cff;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.chart-dot {
+    fill: #3b8cff;
+}
+
+.chart-dot-last {
+    fill: #ff5e7c;
+    stroke: #ffffff;
+    stroke-width: 1.5;
+}
+
+/* 推荐Up卡片：复用 ups-cards-grid / follow-button 按钮样式 */
+.recommend-card .ups-cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .card-date {

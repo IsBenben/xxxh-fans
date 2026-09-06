@@ -1,0 +1,5 @@
+# 生成的站点目录（update.py 输出，部署到 gh-pages 分支）
+build/
+
+# Python 缓存
+__pycache__/
