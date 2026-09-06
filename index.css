@@ -175,6 +175,28 @@ body {
     margin-bottom: 0;
 }
 
+/* meta description 小字（确保描述内容也以正文形式出现在页面中） */
+.article-card .page-description {
+    margin: -0.25rem 0 1rem;
+    font-size: 0.92rem;
+    font-weight: 400;
+    color: #8a9bb5;
+    line-height: 1.7;
+}
+
+/* 首页站点标题 */
+.site-header {
+    text-align: center;
+    margin: 0 auto 1.2rem;
+}
+
+.site-header h1 {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #1e2b3c;
+    letter-spacing: 1px;
+}
+
 /* 历史数据卡片 */
 .cards-grid {
     display: grid;
@@ -196,6 +218,47 @@ body {
 .history-cards .history-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 30px -10px rgba(0, 40, 80, 0.3);
+}
+
+/* 历史快照中间折叠块：整行占位，点击展开（JS 依据 HISTORY_DATA 动态加载） */
+.history-cards .history-expand {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    padding: 0.7rem 1rem;
+    margin: 0.2rem 0;
+    background: #f3f7ff;
+    border: 1px dashed #9db9e6;
+    border-radius: 10px;
+    color: #3b8cff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.history-cards .history-expand:hover {
+    background: #eaf1ff;
+}
+
+.history-cards .history-expand[aria-expanded='true'] {
+    border-style: solid;
+    background: #eaf1ff;
+}
+
+.history-cards .history-expand-range {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #8a9bb5;
+}
+
+/* JS 动态插入卡片时用于定位的隐藏标记 */
+.history-anchor {
+    display: none;
 }
 
 /* 历史图表卡片（SVG 由 index.js 绘制） */
@@ -337,12 +400,21 @@ body {
     width: 100%;
 }
 
-/* 关注按钮卡片 */
+/* 关注按钮卡片（H1 在上，按钮居下居中） */
 .link-card {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.75rem;
     padding: 1.5rem;  /* 调整内边距，让按钮更突出 */
+}
+
+.link-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
 }
 .ups-card h2 {
     margin-bottom: 1em;
@@ -425,5 +497,32 @@ body {
     }
     100% {
         background-position: 200% 50%;
+    }
+}
+
+/* ===== 手机竖屏：历史图表旋转 90° 竖向展示 =====
+   宽 900 的图表在竖屏手机上横向放不下，阅读时将手机转 90° 横持：
+   svg 高度按可用宽度换算（宽高比 3:1 → 预留高度 = 3 × 可用宽度）。 */
+@media (max-width: 640px) and (orientation: portrait) {
+    .chart-card .chart-wrap {
+        height: calc(3 * (100vw - 6.5rem));   /* 为旋转后的竖版图预留垂直空间 */
+    }
+
+    .chart-card .chart-wrap svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: auto;
+        height: calc(100vw - 6.5rem);         /* 旋转后图表宽度 ≈ 卡片可用宽度 */
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    /* 历史数据不足时的空态文案跟随旋转，垂直居中 */
+    .chart-card .chart-wrap .chart-empty {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
     }
 }

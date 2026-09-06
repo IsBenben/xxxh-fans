@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://isbenben.github.io/xxxh-fans/sitemap.xml
