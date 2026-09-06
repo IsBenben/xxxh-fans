@@ -61,6 +61,13 @@ function formatChartTime(ts) {
     return `${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}`;
 }
 
+// 完整可读时间（北京时间），用于悬停弹窗
+function formatChartFullTime(ts) {
+    const d = new Date(ts * 1000 + 8 * 3600 * 1000);
+    const p = (n) => String(n).padStart(2, '0');
+    return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}`;
+}
+
 function formatChartCompact(n) {
     if (n >= 1000000) return `${(n / 1000000).toFixed(1).replace(/\.0$/, '')}M`;
     if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`;
@@ -70,7 +77,8 @@ function formatChartCompact(n) {
 function drawHistoryChart() {
     const container = document.getElementById('historyChart');
     if (!container) return;
-    const data = window.HISTORY_DATA || [];
+    // HISTORY_DATA 由页面内联脚本以顶层 var 声明（挂载于 window）；typeof 兜底防 ReferenceError
+    const data = typeof HISTORY_DATA !== 'undefined' ? HISTORY_DATA : [];
     if (data.length < 2) {
         const empty = document.createElement('div');
         empty.className = 'chart-empty';
@@ -180,14 +188,81 @@ function drawHistoryChart() {
     svg.appendChild(
         makeText(
             formatChartCompact(last.c),
-            x(last.t) + 8,
+            x(last.t) - 8,
             y(last.c) - 8,
-            'start',
+            'end',
             { fill: '#ff5e7c', 'font-weight': '600' }
         )
     );
 
     container.replaceChildren(svg);
+
+    // ===== 悬停：吸附最近采样点，竖直参考线 + 圆点标记，弹窗跟随鼠标 =====
+    const tooltip = document.createElement('div');
+    tooltip.className = 'chart-tooltip';
+    container.appendChild(tooltip);
+
+    const hover = document.createElementNS(NS, 'g');
+    hover.setAttribute('class', 'chart-hover');
+    const guide = document.createElementNS(NS, 'line');
+    guide.setAttribute('class', 'chart-guide');
+    const hoverDot = document.createElementNS(NS, 'circle');
+    hoverDot.setAttribute('r', 4.5);
+    hoverDot.setAttribute('class', 'chart-hover-dot');
+    hover.appendChild(guide);
+    hover.appendChild(hoverDot);
+    svg.appendChild(hover);
+
+    // 二分查找时间轴上与目标最接近的采样点下标（数据按时间升序）
+    const closestIndex = (target) => {
+        let lo = 0;
+        let hi = times.length - 1;
+        if (target <= times[lo]) return lo;
+        if (target >= times[hi]) return hi;
+        while (lo + 1 < hi) {
+            const mid = (lo + hi) >> 1;
+            if (times[mid] <= target) lo = mid;
+            else hi = mid;
+        }
+        return target - times[lo] <= times[hi] - target ? lo : hi;
+    };
+
+    svg.addEventListener('mousemove', (ev) => {
+        // 鼠标位置 -> viewBox 坐标 -> 时间轴位置 -> 最近采样点
+        const sRect = svg.getBoundingClientRect();
+        const vx = ((ev.clientX - sRect.left) / sRect.width) * W;
+        const target = tMin + ((vx - M.left) / innerW) * tSpan;
+        const p = data[closestIndex(target)];
+        const px = x(p.t);
+        const py = y(p.c);
+
+        guide.setAttribute('x1', px);
+        guide.setAttribute('y1', y(cMin));
+        guide.setAttribute('x2', px);
+        guide.setAttribute('y2', y(cMax));
+        hoverDot.setAttribute('cx', px);
+        hoverDot.setAttribute('cy', py);
+        hover.style.opacity = 1;
+
+        tooltip.innerHTML = `<strong>${formatChartFullTime(p.t)}</strong><br>${p.c.toLocaleString()} 粉丝`;
+
+        // 弹窗跟随鼠标，靠近容器边缘时翻转/夹紧防溢出
+        const cRect = container.getBoundingClientRect();
+        tooltip.style.display = 'block';
+        let left = ev.clientX - cRect.left + 16;
+        let top = ev.clientY - cRect.top - tooltip.offsetHeight - 12;
+        const maxLeft = cRect.width - tooltip.offsetWidth - 4;
+        if (left > maxLeft) left = ev.clientX - cRect.left - tooltip.offsetWidth - 16;
+        if (left < 4) left = 4;
+        if (top < 4) top = ev.clientY - cRect.top + 16;
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+    });
+
+    svg.addEventListener('mouseleave', () => {
+        hover.style.opacity = 0;
+        tooltip.style.display = 'none';
+    });
 }
 
 drawHistoryChart();
