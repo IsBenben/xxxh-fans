@@ -82,10 +82,22 @@
         </article>
       </section>
 
+      <!-- 卡片：历史图表（纯JS绘制SVG折线图） -->
+      <section class="card chart-card">
+        <h2>📈 历史图表</h2>
+        <div class="chart-wrap" id="historyChart"></div>
+      </section>
+
       <!-- 卡片3：历史数据 -->
       <section class="card history-cards">
         <div class="history-title">📊 历史快照 (定时更新)</div>
         <div class="cards-grid" id="historyCards">{{history_cards}}</div>
+      </section>
+
+      <!-- 卡片：推荐Up -->
+      <section class="card recommend-card">
+        <h2>🌟 推荐Up</h2>
+        <div class="ups-cards-grid" id="recommendUps">{{recommend_buttons}}</div>
       </section>
     </div>
 
@@ -97,6 +109,8 @@
     <script>
       const BILIBILI_UID = '{{bilibili_uid}}';
       const TOTAL_GOAL = {{total_progress}};
+      // 历史图表数据：[{t: 时间戳(epoch秒), c: 粉丝数}]，时间点不均匀
+      const HISTORY_DATA = {{history_data}};
     </script>
     <script src="index.js"></script>
   </body>
