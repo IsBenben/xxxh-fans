@@ -28,10 +28,10 @@
   </head>
   <body>
     <!-- 页面标题（与首页一致：H1 置于所有卡片之上） -->
-    <header class="site-header">
+    <header class="site-header" role="banner">
       <h1>{{bilibili_name}}</h1>
     </header>
-    <div class="cards-container">
+    <main role="main" class="cards-container">
       <!-- 卡片4：关注引导 -->
       <section class="card link-card">
         <div class="link-card-actions">
@@ -115,9 +115,9 @@
         <h2>🌟 推荐Up</h2>
         <div class="ups-cards-grid" id="recommendUps">{{recommend_buttons}}</div>
       </section>
-    </div>
+    </main>
 
-    <footer class="global-footer">
+    <footer class="global-footer" role="contentinfo">
       来自Bilibili 实时大屏 · 历史数据约每小时更新，实时粉丝数约每5秒刷新<br />
       本项目数据仅供学习交流使用，与哔哩哔哩官方无直接关联，请注意区分
     </footer>
