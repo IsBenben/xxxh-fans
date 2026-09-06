@@ -110,7 +110,8 @@
       const BILIBILI_UID = '{{bilibili_uid}}';
       const TOTAL_GOAL = {{total_progress}};
       // 历史图表数据：[{t: 时间戳(epoch秒), c: 粉丝数}]，时间点不均匀
-      const HISTORY_DATA = {{history_data}};
+      // 用 var（而非 const）声明，使其同时挂载为 window.HISTORY_DATA
+      var HISTORY_DATA = {{history_data}};
     </script>
     <script src="index.js"></script>
   </body>
